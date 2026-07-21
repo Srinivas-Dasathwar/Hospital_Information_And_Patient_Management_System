@@ -1,1 +1,2 @@
 # Hospital_Information_And_Patient_Management_System
+Hospital Information and Patient Management System is a web-based application developed using Python, Django, HTML, CSS, JavaScript, and MySQL. It streamlines hospital operations by managing patients, doctors, appointments, prescriptions, and payments through a secure role-based system. The application improves efficiency by providing separate dashboards for administrators, doctors, and patients, enabling easy appointment scheduling, medical record management, and overall hospital administration.
