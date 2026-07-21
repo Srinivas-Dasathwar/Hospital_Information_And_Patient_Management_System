@@ -1,0 +1,599 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/hospital-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <script src="{% static 'js/admin_dashboard.js' %}"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Hospital Management
+        </div>
+
+        <div class="nav-right">
+            <a href="/dashboard/">Dashboard</a>|
+            <a href="/admin_login/">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="search-container">
+
+        <input type="text" id="searchInput" placeholder="Search doctors, patients, appointments..."
+            onkeyup="searchTable()">
+
+    </div>
+    <center>
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Total Doctors</h3>
+                <h1>{{ total_doctors }}</h1>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Patients</h3>
+                <h1>{{ total_patients }}</h1>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Appointments</h3>
+                <h1>{{ total_appointments }}</h1>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Payments</h3>
+                <h1>{{ total_payments }}</h1>
+            </div>
+
+            <div class="stat-card revenue">
+                <h3>Total Revenue</h3>
+                <h1>₹{{ total_revenue }}</h1>
+            </div>
+
+        </div>
+    </center>
+
+
+    <!-- DOCTORS -->
+
+    <div class="card">
+
+        <h2 class="section-title">
+            Doctor Management
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table>
+                <table>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Specialization</th>
+                        <th>Qualification</th>
+                        <th>Experience(yrs)</th>
+                        <th>Fee(₹)</th>
+                        <th>Passport Photo</th>
+                        <th>Update Photo</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                    {% for d in doctors %}
+
+                    <tr>
+
+                        <form method="POST" enctype="multipart/form-data">
+
+                            {% csrf_token %}
+
+                            <input type="hidden" name="id" value="{{d.user.user_id}}">
+
+                            <input type="hidden" name="role" value="Doctor">
+
+                            <td>
+                                <input type="text" name="full_name" value="{{d.user.full_name}}">
+                            </td>
+
+                            <td>
+                                <input type="email" name="email" value="{{d.user.email}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="phone_no" value="{{d.user.phone_no}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="specialization" value="{{d.specialization}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="qualification" value="{{d.qualification}}">
+                            </td>
+
+                            <td>
+                                <input type="number" name="experience" value="{{d.experience_years}}">
+                            </td>
+
+                            <td>
+                                <input type="number" name="fee" value="{{d.consultation_fee}}">
+                            </td>
+
+                            <td>
+
+    {% if p.photo %}
+
+        <img src="/media/profile_photos/{{ p.photo }}"
+             class="passport-photo">
+
+    {% else %}
+
+        <span class="no-photo">
+            No Photo
+        </span>
+
+    {% endif %}
+
+</td>
+
+<td>
+
+    <input
+        type="file"
+        name="photo"
+        accept="image/*">
+
+</td>
+
+<td class="action-buttons">
+
+    <button
+        type="submit"
+        class="update">
+
+        Update
+
+    </button>
+
+    <a
+        class="delete"
+        href="?delete={{p.user.user_id}}">
+
+        Delete
+
+    </a>
+
+</td>
+                        </form>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+                <div class="pagination-container">
+
+                    {% if doctors.has_previous %}
+                    <a href="?doctor_page={{ doctors.previous_page_number }}" class="btn btn-primary">
+                        Previous
+                    </a>
+                    {% endif %}
+
+                    <span class="page-info">
+                        Page {{ doctors.number }}
+                        of
+                        {{ doctors.paginator.num_pages }}
+                    </span>
+
+                    {% if doctors.has_next %}
+                    <a href="?doctor_page={{ doctors.next_page_number }}" class="btn btn-primary">
+                        Next
+                    </a>
+                    {% endif %}
+
+                </div>
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PATIENTS -->
+
+    <div class="card">
+
+        <h2 class="section-title">
+            Patient Management
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table>
+                <table>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Blood Group</th>
+                        <th>Height(cm)</th>
+                        <th>Weight(kg)</th>
+                        <th>Medical History</th>
+                        <th>Passport Photo</th>
+                        <th>Update Photo</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                    {% for p in patients %}
+
+                    <tr>
+
+                        <form method="POST" enctype="multipart/form-data">
+
+                            {% csrf_token %}
+
+                            <input type="hidden" name="id" value="{{p.user.user_id}}">
+
+                            <input type="hidden" name="role" value="Patient">
+
+                            <td>
+                                <input type="text" name="full_name" value="{{p.user.full_name}}">
+                            </td>
+
+                            <td>
+                                <input type="email" name="email" value="{{p.user.email}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="phone_no" value="{{p.user.phone_no}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="blood_group" value="{{p.blood_group}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="height" value="{{p.height}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="weight" value="{{p.weight}}">
+                            </td>
+
+                            <td>
+                                <input type="text" name="history" value="{{p.medical_history}}">
+                            </td>
+
+<td>
+
+    {% if d.photo %}
+
+        <img src="/media/profile_photos/{{ d.photo }}"
+             class="passport-photo">
+
+    {% else %}
+
+        <span class="no-photo">
+            No Photo
+        </span>
+
+    {% endif %}
+
+</td>
+
+<td>
+
+    <input
+        type="file"
+        name="photo"
+        accept="image/*">
+
+</td>
+
+<td class="action-buttons">
+
+    <button
+        type="submit"
+        class="update">
+
+        Update
+
+    </button>
+
+    <a
+        class="delete"
+        href="?delete={{d.user.user_id}}">
+
+        Delete
+
+    </a>
+
+</td>
+
+                        </form>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+                <div class="pagination-container">
+
+                    {% if patients.has_previous %}
+                    <a href="?patient_page={{ patients.previous_page_number }}" class="btn btn-primary">
+                        Previous
+                    </a>
+                    {% endif %}
+
+                    <span class="page-info">
+                        Page {{ patients.number }}
+                        of
+                        {{ patients.paginator.num_pages }}
+                    </span>
+
+                    {% if patients.has_next %}
+                    <a href="?patient_page={{ patients.next_page_number }}" class="btn btn-primary">
+                        Next
+                    </a>
+                    {% endif %}
+
+                </div>
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- APPOINTMENTS -->
+    <div class="card">
+
+        <h2 class="section-title">
+            Appointments Management
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table>
+                <table id="appointmentTable">
+
+                    <tr>
+
+                        <th>Appointment ID</th>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                    {% for a in appointments %}
+
+                    <tr>
+
+                        <td>{{a.appointment_id}}</td>
+
+                        <td>{{a.patient.user.full_name}}</td>
+
+                        <td>{{a.doctor.user.full_name}}</td>
+
+                        <td>{{a.appointment_date}}</td>
+
+                        <td>{{a.appointment_time}}</td>
+
+                        <td>{{a.reason}}</td>
+
+                        <td>
+
+                            {% if a.status == "Accepted" %}
+
+                            <span class="status-accepted">
+                                Accepted
+                            </span>
+
+                            {% elif a.status == "Rejected" %}
+
+                            <span class="status-rejected">
+                                Rejected
+                            </span>
+
+                            {% elif a.status == "Cancelled" %}
+
+                            <span class="status-cancelled">
+                                Cancelled
+                            </span>
+
+                            {% else %}
+
+                            <span class="status-pending">
+                                Pending
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if a.status != "Cancelled" %}
+
+                            <a class="cancel-btn" href="?cancel_appointment={{a.appointment_id}}">
+
+                                Cancel
+
+                            </a>
+
+                            {% else %}
+
+                            <span class="cancelled-text">
+
+                                Already Cancelled
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            No Appointments Found
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+                <div class="pagination-container">
+
+                    {% if appointments.has_previous %}
+                    <a href="?appointment_page={{ appointments.previous_page_number }}" class="btn btn-primary">
+                        Previous
+                    </a>
+                    {% endif %}
+
+                    <span class="page-info">
+                        Page {{ appointments.number }}
+                        of
+                        {{ appointments.paginator.num_pages }}
+                    </span>
+
+                    {% if appointments.has_next %}
+                    <a href="?appointment_page={{ appointments.next_page_number }}" class="btn btn-primary">
+                        Next
+                    </a>
+                    {% endif %}
+
+                </div>
+
+        </div>
+        </table>
+
+    </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2 class="section-title">
+            Payment History
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>Payment ID</th>
+                <th>Appointment ID</th>
+                <th>Amount(₹)</th>
+                <th>Status</th>
+            </tr>
+
+            {% for payment in payments %}
+
+            <tr>
+
+                <td>{{ payment.payment_id }}</td>
+
+                <td>{{ payment.appointment.appointment_id }}</td>
+
+                <td>₹{{ payment.amount }}</td>
+
+                <td>
+                    {{ payment.payment_status }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+        <div class="pagination-container">
+
+            {% if payments.has_previous %}
+            <a href="?payment_page={{ payments.previous_page_number }}" class="btn btn-primary">
+                Previous
+            </a>
+            {% endif %}
+
+            <span class="page-info">
+                Page {{ payments.number }}
+                of
+                {{ payments.paginator.num_pages }}
+            </span>
+
+            {% if payments.has_next %}
+            <a href="?payment_page={{ payments.next_page_number }}" class="btn btn-primary">
+                Next
+            </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+    <script>
+        function searchTable() {
+
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toLowerCase();
+
+            let tables = document.querySelectorAll("table");
+
+            tables.forEach(table => {
+
+                let rows = table.getElementsByTagName("tr");
+
+                for (let i = 1; i < rows.length; i++) {
+
+                    let text = rows[i].innerText.toLowerCase();
+
+                    if (text.includes(filter)) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

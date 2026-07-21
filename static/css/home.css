@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f5f9ff;
+}
+
+/* Navbar */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  background: #fff;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0d6efd;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #0d6efd;
+}
+
+/* Hero */
+
+.hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(rgba(13, 110, 253, 0.75), rgba(13, 110, 253, 0.75)),
+    url("../images/hospital-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.8;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.primary-btn {
+  background: #20c997;
+  color: white;
+}
+
+.secondary-btn {
+  background: #20c997;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+/* Features */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  padding: 80px 8%;
+}
+
+.feature-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.feature-card h3 {
+  margin-bottom: 15px;
+  color: #0d6efd;
+}
+
+/* Appointments */
+
+.appointments-section {
+  padding: 60px 8%;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #0d6efd;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-table th {
+  background: #0d6efd;
+  color: white;
+  padding: 15px;
+}
+
+.appointment-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.appointment-table tr:hover {
+  background: #f1f7ff;
+}
+
+/* Status */
+
+.status-accepted {
+  color: #198754;
+  font-weight: 600;
+}
+
+.status-rejected {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.status-cancelled {
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #fd7e14;
+  font-weight: 600;
+}
+
+/* Footer */
+
+.footer {
+  text-align: center;
+  padding: 25px;
+  background: #0d6efd;
+  color: white;
+  margin-top: 60px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+}

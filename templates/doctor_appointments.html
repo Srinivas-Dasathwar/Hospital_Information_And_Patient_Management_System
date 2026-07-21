@@ -1,0 +1,126 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Appointment Requests | HIPMS</title>
+    <link rel="stylesheet" href="{% static 'css/hospital-theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/doctor_appointments.css' %}" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header-card">
+        <h1>Appointment Requests</h1>
+        <p>Manage and review patient appointment requests</p>
+      </div>
+
+      {% if appointments %}
+
+      <div class="table-card">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th width="220">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for a in appointments %}
+
+              <tr>
+                <td>{{ a.patient.user.full_name }}</td>
+
+                <td>{{ a.appointment_date }}</td>
+
+                <td>{{ a.appointment_time }}</td>
+
+                <td>{{ a.reason }}</td>
+
+                <td>
+                  {% if a.status == "Accepted" %}
+                  <span class="status accepted">Accepted</span>
+
+                  {% elif a.status == "Rejected" %}
+                  <span class="status rejected">Rejected</span>
+
+                  {% elif a.status == "Cancelled" %}
+                  <span class="status cancelled">Cancelled</span>
+
+                  {% else %}
+                  <span class="status pending">Pending</span>
+                  {% endif %}
+                </td>
+
+                <td class="action-buttons">
+                  {% if a.status == "Pending" %}
+
+                  <a href="?accept={{ a.appointment_id }}" class="accept-btn">
+                    Accept
+                  </a>
+
+                  <a href="?reject={{ a.appointment_id }}" class="reject-btn">
+                    Reject
+                  </a>
+
+                  {% elif a.status == "Accepted" %}
+
+                  <a
+                    href="{% url 'add_prescription' a.appointment_id %}"
+                    class="prescription-btn"
+                  >
+                    Add Prescription
+                  </a>
+
+                  {% else %}
+
+                  <span class="completed-action"> Processed </span>
+
+                  {% endif %}
+                </td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {% else %}
+
+      <div class="empty-card">
+        <h2>No Appointment Requests</h2>
+        <p>There are currently no appointment requests.</p>
+      </div>
+
+      {% endif %}
+    </div>
+    <script>
+      function openAppointmentModal() {
+        document.getElementById("appointmentModal").style.display = "block";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeAppointmentModal() {
+        document.getElementById("appointmentModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    </script>
+  </body>
+</html>

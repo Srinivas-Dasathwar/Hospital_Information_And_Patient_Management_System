@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f4f8fc;
+  min-height: 100vh;
+}
+
+/* Navbar */
+
+.navbar {
+  background: #0d6efd;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  opacity: 0.8;
+}
+
+/* Main Section */
+
+.appointment-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+}
+
+/* Card */
+
+.appointment-card {
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+
+.heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.heading h1 {
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+.heading p {
+  color: #666;
+}
+
+/* Form */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
+}
+
+/* Button */
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: #0d6efd;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .appointment-card {
+    padding: 25px;
+  }
+}

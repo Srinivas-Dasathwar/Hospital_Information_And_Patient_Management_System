@@ -1,0 +1,176 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Signup | HIPMS</title>
+
+    <link rel="stylesheet" href="{% static 'css/hospital-theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="logo">Hospital Management</div>
+
+      <ul>
+        <li><a href="/">🏠︎</a></li>
+        <li><a href="/login/">Login</a></li>
+        <li><a href="/signup/">Signup</a></li>
+      </ul>
+    </nav>
+
+    <div class="signup-container">
+      <div class="signup-card">
+        <div class="signup-header">
+          <h1>Create Account</h1>
+
+          <p>Register as a Doctor or Patient</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {% if error %}
+          <div class="error-message">{{ error }}</div>
+          {% endif %}
+
+          <div class="section">
+            <h3>Account Information</h3>
+
+            <label>Select Role</label>
+
+            <select id="role" name="role" onchange="showFields()" required>
+              <option value="">Choose Role</option>
+
+              <option value="Doctor">Doctor</option>
+
+              <option value="Patient">Patient</option>
+            </select>
+
+            <label>Full Name</label>
+            <input type="text" name="full_name" required />
+
+            <label>Email</label>
+            <input type="email" name="email" required />
+
+            <label>Phone Number</label>
+            <input type="text" name="phone_no" required />
+
+            <label>Gender</label>
+
+            <select name="gender">
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+
+            <label>Password</label>
+
+            <input type="password" name="password" required />
+          </div>
+
+          <div id="doctorFields" class="section">
+            <h3>Doctor Details</h3>
+
+            <input
+              type="text"
+              name="specialization"
+              placeholder="Specialization"
+            />
+
+            <input
+              type="text"
+              name="qualification"
+              placeholder="Qualification"
+            />
+
+            <input
+              type="number"
+              name="experience"
+              placeholder="Experience (Years)"
+            />
+
+            <input type="number" name="fee" placeholder="Consultation Fee" />
+          </div>
+
+          <div id="patientFields" class="section">
+            <h3>Patient Details</h3>
+
+            <input type="text" name="blood_group" placeholder="Blood Group" />
+
+            <input type="number" name="height" placeholder="Height (cm)" />
+
+            <input type="number" name="weight" placeholder="Weight (kg)" />
+
+            <input
+              type="text"
+              name="emergency_contact"
+              placeholder="Emergency Contact"
+            />
+
+            <textarea
+              name="history"
+              rows="5"
+              placeholder="Medical History"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Select Hospital</label>
+
+            <select name="hospital_id" required>
+              <option value="">Select Hospital</option>
+
+              {% for hospital in hospitals %}
+
+              <option value="{{ hospital.hospital_id }}">
+                {{ hospital.hospital_name }}
+              </option>
+
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Passport Size Photo</label>
+            <input type="file" name="photo" accept="image/*" required />
+          </div>
+
+          <button type="submit" class="register-btn">Create Account</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function showFields() {
+        let role = document.getElementById("role").value;
+
+        let doctor = document.getElementById("doctorFields");
+
+        let patient = document.getElementById("patientFields");
+
+        doctor.style.display = "none";
+        patient.style.display = "none";
+
+        if (role == "Doctor") {
+          doctor.style.display = "block";
+        }
+
+        if (role == "Patient") {
+          patient.style.display = "block";
+        }
+      }
+
+      window.onload = showFields;
+    </script>
+
+  </body>
+</html>

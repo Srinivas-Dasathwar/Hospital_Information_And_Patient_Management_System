@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/hospital-theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">Hospital Management</div>
+
+      <ul class="nav-links">
+        <li><a href="/dashboard/">Dashboard</a></li>
+        <li>
+          <a href="{% url 'hospital_search' %}"> Hospitals </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Hospital Information & Patient Management System</h1>
+
+        <p>
+          Delivering better healthcare management through seamless appointment
+          scheduling, patient records, and doctor coordination.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="/signup/" class="btn primary-btn"> Register Now </a>
+
+          <a href="/login/" class="btn secondary-btn"> Login </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2026 Hospital Information & Patient Management System</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Add Prescription</title>
+
+    <link rel="stylesheet" href="{% static 'css/hospital-theme.css' %}" />
+  </head>
+
+  <body>
+    <button type="button" class="back-btn" onclick="window.history.back()">
+      ← Back
+    </button>
+
+    <div class="container">
+      <div class="card">
+        <h1 class="section-title">Add Prescription</h1>
+
+        <h3>Patient: {{ appointment.patient.user.full_name }}</h3>
+
+        <br />
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <label>Medicine Name</label>
+
+          <input type="text" name="medication_name" required />
+
+          <label>Dosage</label>
+
+          <input type="text" name="dosage" required />
+
+          <label>Frequency</label>
+
+          <input type="text" name="frequency" required />
+
+          <label>Duration</label>
+
+          <input type="text" name="duration" required />
+
+          <label>Doctor Notes</label>
+
+          <textarea name="notes"></textarea>
+
+          <br /><br />
+          <label>Upload Report / Previous Prescription</label>
+
+          <input
+            type="file"
+            name="uploaded_file"
+            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+          />
+
+          <button type="submit">Save Prescription</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
